@@ -50,6 +50,12 @@ struct Vec4 {
     float w;
 };
 
+typedef struct CellPadData {
+    int len;    
+    uint16_t button[8]; 
+    uint8_t analog[24]; 
+} CellPadData;
+
 struct Moby {
     byte bSphere[16];
     float pos[4];

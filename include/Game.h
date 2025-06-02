@@ -28,6 +28,11 @@
 #define sprintf ((void (*)(char*, char*, ...))0x11a2154)
 
 
+// Used for querying gamepad inputs.
+// Arguments: unk, pad_id, dst
+#define query_pad ((void (*)(void*, int, void*))0x10bfb08)
+
+
 /*--------------------------------------------------
 ---------------------Variables----------------------
 --------------------------------------------------*/
@@ -38,17 +43,23 @@ register unsigned int r13 asm("r13");
 #define rng_init (*(int*)(r13 - 0x6FFC))
 
 
-// A pointer to the input structure.
-#define input_ptr ((void*)0x147A380)
+#define input_struct_addr 0x147A380
+#define input_struct ((void*)input_struct_addr)
 
+#define down_buttons (*((unsigned int*)(input_struct_addr + 0xA0)))
+#define pressed_buttons (*((unsigned int*)(input_struct_addr + 0xA4)))
+#define released_buttons (*((unsigned int*)(input_struct_addr + 0xA8)))
 
 // Array of all bolts that have been collected. 4 bytes per planet indexed by planet ID 
 #define collected_bolts_array ((char*)0x1562540)
 // Table of how how many bolts you can have in the ship menu, indexed by planet ID.
 #define game_max_bolts_table ((int*) 0x013453f8) 
 
+
 // Frames since spawning on either death or just landing on a planet.
 #define frames_since_spawn (*((int*)0x1480470))
+// Frames since landing on a planet.
+#define frames_since_reload (*((int*)0x1F67130))
 // Count of how many times the player has died.
 #define death_count (*((int*)0x1569774))
 // Current gamestate.

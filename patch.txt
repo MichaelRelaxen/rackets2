@@ -11,6 +11,14 @@
 0x10c955c: bin/draw.bin
 0x10c17c8: 0x490c955f
 
+# bl FUN_010caf2c   
+0x10caf2c: bin/pad_redirect.bin
+0x10bfcf8: 0x4800b235
+
+#freeze rng
+0x119D1C8: 0x4E800020 
+
+
 # DRAW TEXT ADDRESSES UNUSED
 # 0xb10078: 0x490c955f #draw in gameplay loop
 # 0xb4d358: 0x490c955f #draw in menus 
@@ -18,5 +26,3 @@
 # 0xb086b0: 0x490c955f #works for all but loadscreens. taken by sf helper already wtf
 
 
-#freeze rng
-# 0x119D1C8: 0x4E800020 

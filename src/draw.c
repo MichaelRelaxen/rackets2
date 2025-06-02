@@ -14,4 +14,7 @@ void _start() {
 	
 	draw_something_text(0x44, 0x71, 0xFF000000, formatted_rng, -1);
 	draw_something_text(0x44, 0x70, color, formatted_rng, -1);
+
+	draw_something_text(0x44, 0x91, 0xFF000000, formatted_status_string, -1);
+	draw_something_text(0x44, 0x90, color, formatted_status_string, -1);
 } 
