@@ -1,0 +1,22 @@
+#- name: NYUTAS
+
+# somewhere in input
+0x10c9b70: bin/input.bin
+0x10bfcd4: 0x490c9b73
+
+# entry for calling syscalls
+0x10bbd00: bin/lv2.bin
+
+# somewhere in draw 
+0x10c955c: bin/draw.bin
+0x10c17c8: 0x490c955f
+
+# DRAW TEXT ADDRESSES UNUSED
+# 0xb10078: 0x490c955f #draw in gameplay loop
+# 0xb4d358: 0x490c955f #draw in menus 
+# 0xbe6900: 0x490c955f #draw in load screens. crashes on cutscenes tho
+# 0xb086b0: 0x490c955f #works for all but loadscreens. taken by sf helper already wtf
+
+
+#freeze rng
+# 0x119D1C8: 0x4E800020 
