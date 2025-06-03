@@ -11,12 +11,15 @@
 0x10c955c: bin/draw.bin
 0x10c17c8: 0x490c955f
 
-# bl FUN_010caf2c   
+# replace function call to cellGetPadData our own.
 0x10caf2c: bin/pad_redirect.bin
 0x10bfcf8: 0x4800b235
 
+# set rand() value based on frame.
+0x119d1c4: bin/rand.bin
+
 #freeze rng
-0x119D1C8: 0x4E800020 
+# 0x119D1C8: 0x4E800020 
 
 
 # DRAW TEXT ADDRESSES UNUSED

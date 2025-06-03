@@ -12,20 +12,37 @@
 #define TAS_PLAYBACK 5
 #define TAS_STOP 6
 
+#define recorded_buttons *((ushort*)(CUSTOM_VAR + 0x260))
+#define recorded_sticks *((uint*)(CUSTOM_VAR + 0x262))
+#define recorded_pad_state *((uint*)(CUSTOM_VAR + 0x300))
+#define recorded_pad_len *((uint*)(CUSTOM_VAR + 0x304))
+
+#define tas_state *((uint*)(CUSTOM_VAR + 0x270))
+#define tas_stop_api *((uint*)(CUSTOM_VAR + 0x274))
+
+#define tas_fd_ptr ((int*)(CUSTOM_VAR + 0x278))
+#define tas_nread_ptr ((unsigned int*)(CUSTOM_VAR + 0x280))
+
+#define tas_buttons *((uint*)(CUSTOM_VAR + 0x290))
+#define tas_sticks *((uint*)(CUSTOM_VAR + 0x294))
+
+
 #define TAS_START_RECORDING() do { \
     syscall(sys_fs_open, "/dev_hdd0/game/NPEA00386/USRDIR/recording.rtas", 0x241, tas_fd_ptr, 0, 0, 0); \
     tas_state = TAS_RECORDING; \
 } while(0)
 
 #define TAS_RECORD_INPUT() do { \
-    uint8_t buffer[6]; \
-    buffer[0] = (fmt_buttons >> 8) & 0xFF; \
-    buffer[1] = fmt_buttons & 0xFF; \
-    buffer[2] = (fmt_sticks >> 0) & 0xFF; \
-    buffer[3] = (fmt_sticks >> 8) & 0xFF; \
-    buffer[4] = (fmt_sticks >> 16) & 0xFF; \
-    buffer[5] = (fmt_sticks >> 24) & 0xFF; \
-    syscall(sys_fs_write, *tas_fd_ptr, buffer, 6, tas_nread_ptr); \
+    tasInputs buffer[sizeof(tasInputs)]; \
+    buffer->buttons_high = (recorded_buttons >> 8) & 0xFF; \
+    buffer->buttons_low = recorded_buttons & 0xFF; \
+    buffer->right_analog_x = (recorded_sticks >> 0) & 0xFF; \
+    buffer->right_analog_y = (recorded_sticks >> 8) & 0xFF; \
+    buffer->left_analog_x = (recorded_sticks >> 16) & 0xFF; \
+    buffer->left_analog_y = (recorded_sticks >> 24) & 0xFF; \
+    buffer->length = recorded_pad_len; \
+    buffer->padding = recorded_pad_state; \
+    syscall(sys_fs_write, *tas_fd_ptr, buffer, sizeof(tasInputs), tas_nread_ptr); \
 } while(0)
 
 #define TAS_DONE() do { \
@@ -45,11 +62,11 @@
 int32_t _start(uint32_t port_no, cellPadData *data) {
     int32_t ret = cellPadGetData(port_no, data);
 
-    int32_t len = data->length;
-
     // Compress the input data into 6 bytes, first 2 bytes for buttons, last 4 for each of the sticks.
-    fmt_buttons = (data->buttons_high << 8) | data->buttons_low;
-    fmt_sticks = (data->right_analog_x) | (data->right_analog_y << 8)  | (data->left_analog_x  << 16) | (data->left_analog_y  << 24);
+    recorded_buttons = (data->buttons_high << 8) | data->buttons_low;
+    recorded_sticks = (data->right_analog_x) | (data->right_analog_y << 8)  | (data->left_analog_x  << 16) | (data->left_analog_y  << 24);
+    recorded_pad_len = data->length;
+    recorded_pad_state = data->padding;
 
     // Prepare for recording and record on level load in.
     if (tas_state == TAS_RECORDING_WAIT && load_in_level) {
@@ -66,21 +83,16 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
     }
 
     if (tas_state == TAS_PLAYBACK) {
-        // Memset only if we want to block player from putting down their own inputs?
-        memset(data, 0, 24);
 
-        data->length = len;
 
-        if (data->length == 0 && (remote_pressed_buttons != last_remote_pressed_buttons)) {
-            data->length = 24;
-        }
-
-        tasInputs inputBuffer[6];
+        tasInputs inputBuffer[sizeof(tasInputs)];
 
         // Read from file
-        syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, 6, tas_nread_ptr);
+        syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, sizeof(tasInputs), tas_nread_ptr);
 
         // Overwrite the inputs!
+        data->length = inputBuffer->length;
+        data->padding = inputBuffer->padding;
         data->buttons_high = inputBuffer->buttons_high;
         data->buttons_low = inputBuffer-> buttons_low;
         data->right_analog_x = inputBuffer->right_analog_x;
@@ -92,8 +104,5 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
     if ((tas_state == TAS_RECORDING || tas_state == TAS_PLAYBACK) && tas_stop_api) {
         TAS_DONE();
     }
-
-    last_remote_pressed_buttons = remote_pressed_buttons;
-
     return ret;
 } 

@@ -4,7 +4,6 @@ typedef struct {
     uint16_t buttons_high; 
     uint16_t buttons_low;
 
-    // Analog sticks (0 - 255)
     uint16_t right_analog_x;
     uint16_t right_analog_y;
     uint16_t left_analog_x;
@@ -15,11 +14,12 @@ typedef struct {
     uint8_t buttons_high; 
     uint8_t buttons_low;
 
-    // Analog sticks (-127 - 127)
     uint8_t right_analog_x;
     uint8_t right_analog_y;
     uint8_t left_analog_x;
     uint8_t left_analog_y;
+    int32_t length;
+    int32_t padding;
 } tasInputs;
 
 // buttons

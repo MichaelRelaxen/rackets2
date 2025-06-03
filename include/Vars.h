@@ -18,6 +18,10 @@
 
 #define timer_state (*(((int*)CUSTOM_VAR) + 7))
 #define frame_timer (*(((int*)CUSTOM_VAR) + 8))
+#define scrambled_frame (*(((int*)CUSTOM_VAR) + 9))
+
+#define rng_seed (*(unsigned int*)(r13 - 0x7000))
+#define rng_init (*(int*)(r13 - 0x6FFC))
 
 
 #define formatted_time_string ((char*)CUSTOM_VAR + 0x100)
@@ -40,12 +44,6 @@
 #define tas_buttons *((uint*)(CUSTOM_VAR + 0x290))
 #define tas_sticks *((uint*)(CUSTOM_VAR + 0x294))
 
-#define TAS_RECORDING_WAIT 1
-#define TAS_RECORDING 2
-#define TAS_SAVE 3
-#define TAS_PLAYBACK_WAIT 4
-#define TAS_PLAYBACK 5
-#define TAS_STOP 6
 
 #define sys_fs_open 0x321
 #define sys_fs_read 0x322
