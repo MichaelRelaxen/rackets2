@@ -1,7 +1,7 @@
 CC = powerpc64-linux-gnu-gcc
 AS = powerpc64-linux-gnu-as
 LD = powerpc64-linux-gnu-ld
-CFLAGS = -mcpu=cell -mbig -m32 -nostdlib -O0
+CFLAGS = -mcpu=cell -mbig -m32 -nostdlib -O1
 ASFLAGS = -mregnames -mcell -be
 PATCH_FILE = patch.txt
 

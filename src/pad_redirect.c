@@ -4,27 +4,12 @@
 #include "../include/Vars.h"
 #include "../include/Pad.h"
 
-#define cellPadGetData ((int32_t (*)(uint32_t, cellPadData *))0x122479C)
-
 #define TAS_RECORDING_WAIT 1
 #define TAS_RECORDING 2
 #define TAS_PLAYBACK_WAIT 4
 #define TAS_PLAYBACK 5
 #define TAS_STOP 6
 
-#define recorded_buttons *((ushort*)(CUSTOM_VAR + 0x260))
-#define recorded_sticks *((uint*)(CUSTOM_VAR + 0x262))
-#define recorded_pad_state *((uint*)(CUSTOM_VAR + 0x300))
-#define recorded_pad_len *((uint*)(CUSTOM_VAR + 0x304))
-
-#define tas_state *((uint*)(CUSTOM_VAR + 0x270))
-#define tas_stop_api *((uint*)(CUSTOM_VAR + 0x274))
-
-#define tas_fd_ptr ((int*)(CUSTOM_VAR + 0x278))
-#define tas_nread_ptr ((unsigned int*)(CUSTOM_VAR + 0x280))
-
-#define tas_buttons *((uint*)(CUSTOM_VAR + 0x290))
-#define tas_sticks *((uint*)(CUSTOM_VAR + 0x294))
 
 
 #define TAS_START_RECORDING() do { \
@@ -60,6 +45,7 @@
 
 
 int32_t _start(uint32_t port_no, cellPadData *data) {
+
     int32_t ret = cellPadGetData(port_no, data);
 
     // Compress the input data into 6 bytes, first 2 bytes for buttons, last 4 for each of the sticks.
@@ -67,6 +53,8 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
     recorded_sticks = (data->right_analog_x) | (data->right_analog_y << 8)  | (data->left_analog_x  << 16) | (data->left_analog_y  << 24);
     recorded_pad_len = data->length;
     recorded_pad_state = data->padding;
+
+
 
     // Prepare for recording and record on level load in.
     if (tas_state == TAS_RECORDING_WAIT && load_in_level) {
@@ -83,8 +71,6 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
     }
 
     if (tas_state == TAS_PLAYBACK) {
-
-
         tasInputs inputBuffer[sizeof(tasInputs)];
 
         // Read from file

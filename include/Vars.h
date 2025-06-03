@@ -20,9 +20,11 @@
 #define frame_timer (*(((int*)CUSTOM_VAR) + 8))
 #define scrambled_frame (*(((int*)CUSTOM_VAR) + 9))
 
+#define framestep_mode (*(((int*)CUSTOM_VAR) + 10))
+#define step_frame (*(((int*)CUSTOM_VAR) + 11))
+
 #define rng_seed (*(unsigned int*)(r13 - 0x7000))
 #define rng_init (*(int*)(r13 - 0x6FFC))
-
 
 #define formatted_time_string ((char*)CUSTOM_VAR + 0x100)
 #define formatted_status_string ((char*)CUSTOM_VAR + 0x150)
@@ -32,8 +34,10 @@
 #define last_remote_pressed_buttons *((int*)(CUSTOM_VAR + 0x254))
 #define remote_joysticks *((int*)(CUSTOM_VAR + 0x258))
 
-#define fmt_buttons *((ushort*)(CUSTOM_VAR + 0x260))
-#define fmt_sticks *((uint*)(CUSTOM_VAR + 0x262))
+#define recorded_buttons *((ushort*)(CUSTOM_VAR + 0x260))
+#define recorded_sticks *((uint*)(CUSTOM_VAR + 0x262))
+#define recorded_pad_state *((uint*)(CUSTOM_VAR + 0x300))
+#define recorded_pad_len *((uint*)(CUSTOM_VAR + 0x304))
 
 #define tas_state *((uint*)(CUSTOM_VAR + 0x270))
 #define tas_stop_api *((uint*)(CUSTOM_VAR + 0x274))
@@ -43,6 +47,9 @@
 
 #define tas_buttons *((uint*)(CUSTOM_VAR + 0x290))
 #define tas_sticks *((uint*)(CUSTOM_VAR + 0x294))
+
+#define queried_inputs ((cellPadData*)(CUSTOM_VAR + 0x500))
+
 
 
 #define sys_fs_open 0x321

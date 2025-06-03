@@ -39,3 +39,9 @@ typedef struct {
 #define BTN_RIGHT       0x2000
 #define BTN_DOWN        0x4000
 #define BTN_LEFT        0x8000
+
+#define FSTEP_START_COMBO (BTN_L2 | BTN_L1)
+#define STEP_BTN (BTN_UP)
+
+
+#define cellPadGetData ((int32_t (*)(uint32_t, cellPadData *))0x122479C)
