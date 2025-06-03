@@ -1,9 +1,10 @@
-#include "../include/Moby.h"
+#include "../include/Types.h"
 #include "../include/Game.h"
 #include "../include/Macros.h"
 #include "../include/Vars.h"
 
 void _start() {
+	// Crash if we run this code on the loading screens... so just don't run it.
 	if(should_load)
 		return;
 	
@@ -12,8 +13,8 @@ void _start() {
 	draw_something_text(0x44, 0x51, 0xFF000000, formatted_time_string, -1);
 	draw_something_text(0x44, 0x50, color, formatted_time_string, -1);
 	
-	draw_something_text(0x44, 0x71, 0xFF000000, formatted_rng, -1);
-	draw_something_text(0x44, 0x70, color, formatted_rng, -1);
+	draw_something_text(0x44, 0x71, 0xFF000000, formatted_frames, -1);
+	draw_something_text(0x44, 0x70, color, formatted_frames, -1);
 
 	draw_something_text(0x44, 0x91, 0xFF000000, formatted_status_string, -1);
 	draw_something_text(0x44, 0x90, color, formatted_status_string, -1);

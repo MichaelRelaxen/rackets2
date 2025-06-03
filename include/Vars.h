@@ -2,8 +2,6 @@
 ----------------Custom variables <3-----------------
 --------------------------------------------------*/
 
-#define NO_CUBOID (0xFFFFFFFF)
-#define NULL 0
 #define CUSTOM_VAR (0x1BE0000)
 
 #define start_real_time_sec_ptr (((int*)CUSTOM_VAR) + 0)
@@ -28,7 +26,7 @@
 
 #define formatted_time_string ((char*)CUSTOM_VAR + 0x100)
 #define formatted_status_string ((char*)CUSTOM_VAR + 0x150)
-#define formatted_rng ((char*)CUSTOM_VAR + 0x200)
+#define formatted_frames ((char*)CUSTOM_VAR + 0x200)
 
 #define remote_pressed_buttons *((int*)(CUSTOM_VAR + 0x250))
 #define last_remote_pressed_buttons *((int*)(CUSTOM_VAR + 0x254))
@@ -51,7 +49,7 @@
 #define queried_inputs ((cellPadData*)(CUSTOM_VAR + 0x500))
 
 
-
+#define sys_usleep 0x8d
 #define sys_fs_open 0x321
 #define sys_fs_read 0x322
 #define sys_fs_write 0x323

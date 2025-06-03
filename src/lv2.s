@@ -1,4 +1,4 @@
-# taken from https://github.com/doesthisusername/rc3-il/blob/master/lv2.s
+# Entry for calling PS3 syscalls. Taken from https://github.com/doesthisusername/rc3-il/blob/master/lv2.s
 entry:
     addi    r1, r1, -0x10
     mflr    r11

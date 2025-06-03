@@ -21,31 +21,33 @@
 // Arguments: x, y, color, text, max_length
 #define draw_something_text ((void (*)(int, int, unsigned int, char*, int))0xb14a44)
 
+// Toasts a message. args: formatted txt, length.
 #define toast_message ((void (*)(char*, int))0x0b55218)
 
 // Used for formatting strings.
 // Arguments: dst, fmt, ...
 #define sprintf ((void (*)(char*, char*, ...))0x11a2154)
 
-
-// Used for querying gamepad inputs.
+// Used for querying gamepad inputs. NOT USING THIS.
 // Arguments: unk, pad_id, dst
 #define query_pad ((void (*)(void*, int, void*))0x10bfb08)
+
+// Get current controller inputs etc. Args: Port no, cellPadGetData struct.
+#define cellPadGetData ((int32_t (*)(uint32_t, cellPadData *))0x122479C)
 
 
 /*--------------------------------------------------
 ---------------------Variables----------------------
 --------------------------------------------------*/
 
-// Randomness 
+// Default RNG variables. We don't use these with the replaced rand.c function though.
 register unsigned int r13 asm("r13");
 #define rng_seed (*(unsigned int*)(r13 - 0x7000))
 #define rng_init (*(int*)(r13 - 0x6FFC))
 
-
+// Addresses to input structure, not used since we use cellPadGetData hook instead.
 #define input_struct_addr 0x147A380
 #define input_struct ((void*)input_struct_addr)
-
 #define down_buttons (*((unsigned int*)(input_struct_addr + 0xA0)))
 #define pressed_buttons (*((unsigned int*)(input_struct_addr + 0xA4)))
 #define released_buttons (*((unsigned int*)(input_struct_addr + 0xA8)))
@@ -54,7 +56,6 @@ register unsigned int r13 asm("r13");
 #define collected_bolts_array ((char*)0x1562540)
 // Table of how how many bolts you can have in the ship menu, indexed by planet ID.
 #define game_max_bolts_table ((int*) 0x013453f8) 
-
 
 // Frames since spawning on either death or just landing on a planet.
 #define frames_since_spawn (*((int*)0x1480470))
@@ -79,7 +80,6 @@ register unsigned int r13 asm("r13");
 #define ship_bolt_scale ((float*)0x013182A0)
 // Acceleration for the jump_pad
 #define jump_pad_accel ((float*)0x13185B8)
-
 
 // Current type of loading screen that's being shown
 #define load_screen_type (*((int*)0x147A254))
@@ -130,3 +130,10 @@ register unsigned int r13 asm("r13");
 #define SHIP_SHACK 24
 #define WUPASH 25
 #define JAMMING_ARRAY 26
+
+// Syscalls
+#define sys_usleep 0x8d
+#define sys_fs_open 0x321
+#define sys_fs_read 0x322
+#define sys_fs_write 0x323
+#define sys_fs_close 0x324

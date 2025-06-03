@@ -1,4 +1,4 @@
-#include "../include/Moby.h"
+#include "../include/Types.h"
 #include "../include/Game.h"
 #include "../include/Macros.h"
 #include "../include/Vars.h"
@@ -9,8 +9,6 @@
 #define TAS_PLAYBACK_WAIT 4
 #define TAS_PLAYBACK 5
 #define TAS_STOP 6
-
-
 
 #define TAS_START_RECORDING() do { \
     syscall(sys_fs_open, "/dev_hdd0/game/NPEA00386/USRDIR/recording.rtas", 0x241, tas_fd_ptr, 0, 0, 0); \
@@ -43,7 +41,6 @@
     tas_state = TAS_PLAYBACK; \
 } while(0)
 
-
 int32_t _start(uint32_t port_no, cellPadData *data) {
 
     int32_t ret = cellPadGetData(port_no, data);
@@ -53,8 +50,6 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
     recorded_sticks = (data->right_analog_x) | (data->right_analog_y << 8)  | (data->left_analog_x  << 16) | (data->left_analog_y  << 24);
     recorded_pad_len = data->length;
     recorded_pad_state = data->padding;
-
-
 
     // Prepare for recording and record on level load in.
     if (tas_state == TAS_RECORDING_WAIT && load_in_level) {
@@ -77,6 +72,7 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, sizeof(tasInputs), tas_nread_ptr);
 
         // Overwrite the inputs!
+        // For input recording we need both the length and the bytes that are set in "padding", or else it desyncs.
         data->length = inputBuffer->length;
         data->padding = inputBuffer->padding;
         data->buttons_high = inputBuffer->buttons_high;
