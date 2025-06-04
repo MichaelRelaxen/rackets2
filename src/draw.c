@@ -8,14 +8,14 @@ void _start() {
 	if(should_load)
 		return;
 	
-	uint32_t color = RAINBOW_COLOR(frames_since_spawn * 5);
-	
-	draw_something_text(0x44, 0x51, 0xFF000000, formatted_time_string, -1);
-	draw_something_text(0x44, 0x50, color, formatted_time_string, -1);
-	
-	draw_something_text(0x44, 0x71, 0xFF000000, formatted_frames, -1);
-	draw_something_text(0x44, 0x70, color, formatted_frames, -1);
+	uint32_t color = rainbow_color(frames_since_spawn * 5);
 
-	draw_something_text(0x44, 0x91, 0xFF000000, formatted_status_string, -1);
-	draw_something_text(0x44, 0x90, color, formatted_status_string, -1);
+	uint y_ofs = 0x15f;
+	uint x_ofs = 0x52;
+	draw_box(0x40 + x_ofs, y_ofs - 0x4, -0x4b + x_ofs, y_ofs + 0x45, 0x70000000, 0);
+
+	text_small_right(-0x2 - 0x45 + x_ofs, 0x0 + y_ofs, color, formatted_time_string, -1);
+	text_small_right(-0x2 - 0x45 + x_ofs, 0x10 + y_ofs, color, formatted_frames, -1);
+	text_small_right(-0x2 - 0x45 + x_ofs, 0x20 + y_ofs, color, formatted_status_string, -1);
+	text_small_right(-0x2 - 0x45 + x_ofs, 0x30 + y_ofs, color, formatted_ntrl, -1);
 } 

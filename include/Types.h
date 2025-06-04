@@ -50,6 +50,8 @@ struct Vec4 {
     float w;
 };
 
+
+
 struct Moby {
     byte bSphere[16];
     float pos[4];

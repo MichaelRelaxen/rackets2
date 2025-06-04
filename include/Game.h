@@ -17,9 +17,26 @@
 // Sets moby's state to -3, effectively despawning it. arg: moby ptr
 #define despawn_moby ((void (*)(Moby*))0xb575ec)
 
-// Used for drawing centered medium text. Needs to be called at a specific point in the draw loop.
+// Used for drawing text. Needs to be called at a specific point in the draw loop.
 // Arguments: x, y, color, text, max_length
-#define draw_something_text ((void (*)(int, int, unsigned int, char*, int))0xb14a44)
+#define text_medium_left ((void (*)(int, int, unsigned int, char*, int))0xb14624)
+#define text_medium_center ((void (*)(int, int, unsigned int, char*, int))0xb14a44)
+#define text_medium_right ((void (*)(int, int, unsigned int, char*, int))0xb142b8)
+
+#define text_small_left ((void (*)(int, int, unsigned int, char*, int))0xb14784)
+#define text_small_center ((void (*)(int, int, unsigned int, char*, int))0xb0e960)
+#define text_small_right ((void (*)(int, int, unsigned int, char*, int))0xb0e758)
+
+#define text_large_center ((void (*)(int, int, unsigned int, char*, int))0xb14d54)
+#define text_large_right ((void (*)(int, int, unsigned int, char*, int))0xb1331c)
+
+#define text_large_as_fuck ((void (*)(int, int, unsigned int, char*, int))0xb14ebc)
+
+#define draw_box ((void (*)(int, int, int, int, int, char))0xb2e98c)
+
+// #define text_opt_draw ((void (*)(textOpt*, unsigned int, char*, int))0xb14ebc)
+
+
 
 // Toasts a message? args: formatted txt, length.
 #define toast_message ((void (*)(char*, int))0x0b55218)
@@ -65,6 +82,10 @@
 #define player_coords (*((Vec4*)0x147F260))
 // Weapon that's currently being held.
 #define current_weapon (*((int*)0x14814C4))
+
+// Ratchet's current speed value.
+#define neutral_speed (*((float*)0x147F394))
+
 
 // Modifier for how large the scale of normal 0x46e plat bolts should be.
 #define game_bolt_scale ((float*)0x01373EA0)

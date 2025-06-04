@@ -8,7 +8,6 @@ void _start() {
 	frame_timer += 1;
 	sys_time_get(start_real_time_sec_ptr, start_real_time_nsec_ptr);
 
-	// TODO: Add racman integration for framestep.
 	if (framestep_mode) {
 		if (!step_frame) {
 			while (framestep_mode && !step_frame) {
@@ -16,22 +15,25 @@ void _start() {
 			}
 		}
 		if (framestep_mode)
-			step_frame = 0; // break out of the loop.
+			step_frame = 0;
 	}
 
-	// Reset timers and RNG on reload.
 	if(load_in_level) { 
 		reset_rta_timer();
 		frame_timer = 0;
 	}
 
-	// Destination planet is set when you change planet, so we will just not update the sprintf when we leave the level.
+	uint neutral = (uint)(neutral_speed * 100000);
+
+	// Destination planet is set when you change planet, so we will just not update the sprintfs to "stop" the timer.
 	if(!destination_planet) { 
-		sprintf(formatted_time_string, "RTA: %d.%02d", RTA_SEC, RTA_MS); // floats dont work
-		sprintf(formatted_frames, "Frames: %10d", frame_timer);
+		// 
+		sprintf(formatted_time_string, "RTA: %d.%02d", rta_sec, rta_cs); // floats dont work
+		sprintf(formatted_frames, "Frames: %d", frame_timer);
 		sprintf(formatted_status_string, "Mode: %s", 
-			(tas_state == 5) ? "Playback" : 
+			(tas_state == 5) ? "Playing" : 
 			(tas_state == 2) ? "Recording" : "Idle");
+		sprintf(formatted_ntrl, "Ntrl: 0.%05d", neutral);
 
 	}
 	

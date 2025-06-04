@@ -14,7 +14,7 @@ register unsigned int ctr asm("ctr");
 register unsigned int lr asm("lr");
 
 // ctr and 0xffff0000 takes care of enemies syncing? and some particle fx
-// 0b5d500 cuz proly like 0xB5D1E0 and 0xB5D258 are prob for bolts
+// 0b5d500.. idk this doesnt work. bolts still are diff for each replay but i cant be bothered rn.
 #define _caller ((ctr != 0) ? ctr : ((lr < 0xB5d500) ? (lr & 0xFFFF0000) : (lr & 0xFFFFF000)))
 
 uint32_t _start(void)

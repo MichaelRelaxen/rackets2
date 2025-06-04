@@ -45,7 +45,6 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
 
     int32_t ret = cellPadGetData(port_no, data);
 
-    // Compress the input data into 6 bytes, first 2 bytes for buttons, last 4 for each of the sticks.
     recorded_buttons = (data->buttons_high << 8) | data->buttons_low;
     recorded_sticks = (data->right_analog_x) | (data->right_analog_y << 8)  | (data->left_analog_x  << 16) | (data->left_analog_y  << 24);
     recorded_pad_len = data->length;
@@ -73,6 +72,8 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
 
         // Overwrite the inputs!
         // For input recording we need both the length and the bytes that are set in "padding", or else it desyncs.
+        // According to the SDK documentation, if the data output from the controller is the same as the data obtained before, then length should be 0.
+        // Realistically, easiest way to get around this is to just record the length anyway so fuk it.
         data->length = inputBuffer->length;
         data->padding = inputBuffer->padding;
         data->buttons_high = inputBuffer->buttons_high;
