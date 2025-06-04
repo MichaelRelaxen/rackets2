@@ -21,12 +21,16 @@
 // Arguments: x, y, color, text, max_length
 #define draw_something_text ((void (*)(int, int, unsigned int, char*, int))0xb14a44)
 
-// Toasts a message. args: formatted txt, length.
+// Toasts a message? args: formatted txt, length.
 #define toast_message ((void (*)(char*, int))0x0b55218)
 
 // Used for formatting strings.
-// Arguments: dst, fmt, ...
+// Arguments: destination, format, ...
 #define sprintf ((void (*)(char*, char*, ...))0x11a2154)
+
+// Print to tty console. 
+// Arguments: format, ...
+#define printf ((void (*)(char*, ...))0x10d4a1c)
 
 // Used for querying gamepad inputs. NOT USING THIS.
 // Arguments: unk, pad_id, dst
@@ -39,18 +43,6 @@
 /*--------------------------------------------------
 ---------------------Variables----------------------
 --------------------------------------------------*/
-
-// Default RNG variables. We don't use these with the replaced rand.c function though.
-register unsigned int r13 asm("r13");
-#define rng_seed (*(unsigned int*)(r13 - 0x7000))
-#define rng_init (*(int*)(r13 - 0x6FFC))
-
-// Addresses to input structure, not used since we use cellPadGetData hook instead.
-#define input_struct_addr 0x147A380
-#define input_struct ((void*)input_struct_addr)
-#define down_buttons (*((unsigned int*)(input_struct_addr + 0xA0)))
-#define pressed_buttons (*((unsigned int*)(input_struct_addr + 0xA4)))
-#define released_buttons (*((unsigned int*)(input_struct_addr + 0xA8)))
 
 // Array of all bolts that have been collected. 4 bytes per planet indexed by planet ID 
 #define collected_bolts_array ((char*)0x1562540)
