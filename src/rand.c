@@ -13,18 +13,27 @@
 register unsigned int ctr asm("ctr");
 register unsigned int lr asm("lr");
 
-// ctr and 0xffff0000 takes care of enemies syncing? and some particle fx
-// 0b5d500.. idk this doesnt work. bolts still are diff for each replay but i cant be bothered rn.
-#define _caller ((ctr != 0) ? ctr : ((lr < 0xB5d500) ? (lr & 0xFFFF0000) : (lr & 0xFFFFF000)))
+register uint32_t *r1 asm("r1");
+
+#define _caller (*((uint32_t *)(*(r1 + 1)) + 5))
+
+// not using this but yea sure ok whatever
+#define get_func_that_calls_rand() ({ \
+  int32_t o = (int32_t)(*((uint32_t *)(_caller - 4)) & 0x03FFFFFC); \
+  (o & 0x02000000) ? ((_caller - 4) + (o | 0xFC000000)) : ((_caller - 4) + o); \
+})
+
+// i have no idea anymore
+#define caller ((ctr != 0) ? ctr : ((lr < 0xB5d500) ? (lr & 0xFFFF0000) : (_caller)))
 
 uint32_t _start(void)
 {
-    if (last_caller != _caller) {
-        last_caller = _caller;
+    if (last_caller != caller) {
+        last_caller = caller;
         rand_count = 1;
     } else {
         rand_count += 1000;
     }
 
-    return SCRAMBLE_FRAME(frames_since_spawn + rand_count) & 0x3fffffff;
+    return SCRAMBLE_FRAME(frames_since_spawn + rand_count) /*& 0x3fffffff*/;
 }
