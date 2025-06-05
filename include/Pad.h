@@ -44,4 +44,3 @@ typedef struct {
 #define STEP_BTN (BTN_UP)
 
 
-#define cellPadGetData ((int32_t (*)(uint32_t, cellPadData *))0x122479C)

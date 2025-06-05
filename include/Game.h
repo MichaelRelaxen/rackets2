@@ -1,6 +1,8 @@
 /*--------------------------------------------------
 ---------------------Functions----------------------
 --------------------------------------------------*/
+// Call PS3 lv2 syscalls.
+#define syscall ((int (*)(int, ...))0x10bbd00)
 
 // Used for copying memory. Arguments: destination, source, size
 #define memcpy ((void (*)(void*, void*, int))0x119a97c)
@@ -36,8 +38,6 @@
 
 // #define text_opt_draw ((void (*)(textOpt*, unsigned int, char*, int))0xb14ebc)
 
-
-
 // Toasts a message? args: formatted txt, length.
 #define toast_message ((void (*)(char*, int))0x0b55218)
 
@@ -48,10 +48,6 @@
 // Print to tty console. 
 // Arguments: format, ...
 #define printf ((void (*)(char*, ...))0x10d4a1c)
-
-// Used for querying gamepad inputs. NOT USING THIS.
-// Arguments: unk, pad_id, dst
-#define query_pad ((void (*)(void*, int, void*))0x10bfb08)
 
 // Get current controller inputs etc. Args: Port no, cellPadGetData struct.
 #define cellPadGetData ((int32_t (*)(uint32_t, cellPadData *))0x122479C)
@@ -102,6 +98,8 @@
 #define should_load (*((int*)0x156B050))
 // Planet that's currently being loaded.
 #define destination_planet (*((int*)0x156B054))
+
+#define load_in_level ((!should_load) && (old_should_load))
 
 // Weapons/Gadget IDs
 #define ELECTROLYZER 38

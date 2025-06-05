@@ -1,6 +1,5 @@
 #include "../include/Types.h"
 #include "../include/Game.h"
-#include "../include/Macros.h"
 #include "../include/Vars.h"
 #include "../include/Pad.h"
 
@@ -42,6 +41,7 @@
 } while(0)
 
 int32_t _start(uint32_t port_no, cellPadData *data) {
+    frame_timer += 1;
 
     int32_t ret = cellPadGetData(port_no, data);
 
@@ -70,6 +70,11 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         // Read from file
         syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, sizeof(tasInputs), tas_nread_ptr);
 
+        if(inputBuffer->length == 0xDEADDEAD) {
+            tas_stop_api = 1;
+            return ret;
+        }
+
         // Overwrite the inputs!
         // For input recording we need both the length and the bytes that are set in "padding", or else it desyncs.
         // According to the SDK documentation, if the data output from the controller is the same as the data obtained before, then length should be 0.
@@ -84,7 +89,17 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         data->left_analog_y = inputBuffer->left_analog_y;
     }
 
-    if ((tas_state == TAS_RECORDING || tas_state == TAS_PLAYBACK) && tas_stop_api) {
+    if ((tas_state == TAS_PLAYBACK) && tas_stop_api) {
+        TAS_DONE();
+    }
+    if ((tas_state == TAS_RECORDING) && tas_stop_api) {
+        // So that we know where the file ends.
+        uint32_t endBuffer[4];
+        endBuffer[0] = 0xDEADDEAD;
+        endBuffer[1] = 0xDEADDEAD;
+        endBuffer[2] = 0xDEADDEAD;
+        endBuffer[3] = frame_timer;
+        syscall(sys_fs_write, *tas_fd_ptr, endBuffer, 16, tas_nread_ptr); \
         TAS_DONE();
     }
     return ret;
