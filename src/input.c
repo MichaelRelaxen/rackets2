@@ -54,6 +54,7 @@ void _start() {
 			(tas_state == 5) ? "Playing" : 
 			(tas_state == 2) ? "Recording" : "Idle");
 		sprintf(formatted_ntrl, "Ntrl: 0.%05d", neutral);
+        sprintf(formatted_state, "State: %d", player_state);
 
 	}
 

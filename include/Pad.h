@@ -19,7 +19,7 @@ typedef struct {
     uint8_t left_analog_x;
     uint8_t left_analog_y;
     uint16_t breakp; 
-    uint16_t render; // was gonna use this for something but i'll just leave it like this for now
+    uint16_t render;
     uint16_t length;
     int32_t padding;
 } tasInputs;

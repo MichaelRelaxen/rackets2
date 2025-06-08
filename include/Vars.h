@@ -25,15 +25,19 @@
 #define formatted_status_string ((char*)CUSTOM_VAR + 0x120)
 #define formatted_frames ((char*)CUSTOM_VAR + 0x140)
 #define formatted_ntrl ((char*)CUSTOM_VAR + 0x155)
+#define formatted_state ((char*)CUSTOM_VAR + 0x175)
 
 // pad_redirect.c
 #define should_render (*(((int*)CUSTOM_VAR) + 12))
 #define set_gcm_flip (*(((int*)CUSTOM_VAR) + 13))
 
-#define frame_to_skip_to (*(((int*)CUSTOM_VAR) + 14))
+#define desired_should_render (*(((int*)CUSTOM_VAR) + 14))
+#define desired_gcm_flip (*(((int*)CUSTOM_VAR) + 15))
 
 #define api_load (*(((int*)CUSTOM_VAR) + 16))
 #define api_setaside (*(((int*)CUSTOM_VAR) + 17))
+
+#define hide_gui (*(((int*)CUSTOM_VAR) + 18))
 
 #define api_aside_buf ((void*)0x1C00000)
 
