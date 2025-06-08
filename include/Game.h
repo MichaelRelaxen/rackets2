@@ -52,10 +52,20 @@
 // Get current controller inputs etc. Args: Port no, cellPadGetData struct.
 #define cellPadGetData ((int32_t (*)(uint32_t, cellPadData *))0x122479C)
 
+// Arguments: unk, buf
+#define perform_load ((void (*)(int, void*))0x83250)
 
+// Arguments: Mode to save
+#define save_handler ((void (*)(int))0x82e08)
 /*--------------------------------------------------
 ---------------------Variables----------------------
 --------------------------------------------------*/
+
+
+// A pointer to the current save data info in memory.
+#define savedata_info (*((void**)0x1410E50))
+// A pointer path to the current save data buffer.
+#define savedata_buf (*(void**)((int)savedata_info + 4))
 
 // Array of all bolts that have been collected. 4 bytes per planet indexed by planet ID 
 #define collected_bolts_array ((char*)0x1562540)
@@ -103,6 +113,12 @@
 
 // Weapons/Gadget IDs
 #define ELECTROLYZER 38
+
+// Save handler modes
+#define SAVE_MENU 0
+#define LOAD_MENU 1
+#define AUTO_SAVE 3
+
 
 // Gamestates
 #define INGAME 0

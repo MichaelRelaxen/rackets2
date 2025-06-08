@@ -19,6 +19,12 @@
 
 #define sys_time_get(sec_ptr, nsec_ptr) syscall(0x91, (sec_ptr), (nsec_ptr))
 
+#define set_aside_file() \
+    for (int i = 0; i < 0x200000; i += 0x8000) { \
+        memcpy((void*)((int)api_aside_buf + i), (void*)((int)savedata_buf + i), 0x8000); \
+    }
+
+
 void _start() {
 	sys_time_get(start_real_time_sec_ptr, start_real_time_nsec_ptr);
 
@@ -49,6 +55,18 @@ void _start() {
 			(tas_state == 2) ? "Recording" : "Idle");
 		sprintf(formatted_ntrl, "Ntrl: 0.%05d", neutral);
 
+	}
+
+	if(api_setaside) {
+		api_setaside = 0;
+		set_aside_file();
+	}
+	if(api_load) {
+        if (!*(int*)api_aside_buf)
+            set_aside_file();
+
+		perform_load(0, api_aside_buf);
+		api_load = 0;
 	}
 	
     // Used for load_in_level macro.
