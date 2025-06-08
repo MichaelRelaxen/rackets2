@@ -14,7 +14,7 @@
 #define reset_timers() do { \
     sec_offset = start_real_time_sec; \
     nsec_offset = start_real_time_nsec; \
-    frame_timer = 0; \
+    frame_timer = 1; \
 } while (0)
 
 #define sys_time_get(sec_ptr, nsec_ptr) syscall(0x91, (sec_ptr), (nsec_ptr))

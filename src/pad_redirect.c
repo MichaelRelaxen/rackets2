@@ -40,6 +40,12 @@
     tas_state = TAS_PLAYBACK; \
 } while(0)
 
+// render mode
+#define NONE 0 
+#define NO_RENDER_UNCAP 1
+#define UNCAP_ONLY 2
+#define NO_RENDER_ONLY 3
+
 int32_t _start(uint32_t port_no, cellPadData *data) {
     frame_timer += 1;
 
@@ -70,9 +76,22 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         // Read from file
         syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, sizeof(tasInputs), tas_nread_ptr);
 
-        if(inputBuffer->length == 0xDEADDEAD) {
+        if(inputBuffer->render == 0xDEAD) {
             tas_stop_api = 1;
             return ret;
+        }
+
+        if(inputBuffer->breakp == 1)
+            framestep_mode = 1;
+
+        // Disable rendering if frame_to_skip_to is set.
+        if(frame_to_skip_to && frame_timer < frame_to_skip_to) {
+            set_gcm_flip = 1;
+            should_render = 1;
+        }
+        else {
+            set_gcm_flip = 0;
+            should_render = 0;
         }
 
         // Overwrite the inputs!
@@ -102,5 +121,9 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         syscall(sys_fs_write, *tas_fd_ptr, endBuffer, 16, tas_nread_ptr); \
         TAS_DONE();
     }
+
+    if(tas_stop_api && tas_state == 6)
+        tas_stop_api = 0;
+
     return ret;
 } 

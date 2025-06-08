@@ -18,7 +18,9 @@ typedef struct {
     uint8_t right_analog_y;
     uint8_t left_analog_x;
     uint8_t left_analog_y;
-    int32_t length;
+    uint16_t breakp; 
+    uint16_t render; // was gonna use this for something but i'll just leave it like this for now
+    uint16_t length;
     int32_t padding;
 } tasInputs;
 
@@ -39,8 +41,4 @@ typedef struct {
 #define BTN_RIGHT       0x2000
 #define BTN_DOWN        0x4000
 #define BTN_LEFT        0x8000
-
-#define FSTEP_START_COMBO (BTN_L2 | BTN_L1)
-#define STEP_BTN (BTN_UP)
-
 

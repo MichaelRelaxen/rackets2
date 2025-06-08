@@ -1,7 +1,7 @@
 /*--------------------------------------------------
 ---------------------Functions----------------------
 --------------------------------------------------*/
-// Call PS3 lv2 syscalls.
+// Call PS3 lv2 syscalls. Function comes from the lv2.s file.
 #define syscall ((int (*)(int, ...))0x10bbd00)
 
 // Used for copying memory. Arguments: destination, source, size

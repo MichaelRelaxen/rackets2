@@ -21,9 +21,10 @@
 #define framestep_mode (*(((int*)CUSTOM_VAR) + 10))
 #define step_frame (*(((int*)CUSTOM_VAR) + 11))
 
+#define should_render (*(((int*)CUSTOM_VAR) + 12))
+#define set_gcm_flip (*(((int*)CUSTOM_VAR) + 13))
 
-#define rng_nudge (*(((int*)CUSTOM_VAR) + 12))
-#define nudged_frames (*(((int*)CUSTOM_VAR) + 13))
+#define frame_to_skip_to (*(((int*)CUSTOM_VAR) + 14))
 
 #define formatted_time_string ((char*)CUSTOM_VAR + 0x100)
 #define formatted_status_string ((char*)CUSTOM_VAR + 0x120)

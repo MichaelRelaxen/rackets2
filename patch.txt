@@ -1,4 +1,4 @@
-#- name: NYUTAS
+#- name: Rackets2
 
 # somewhere in input
 0x10c9b70: bin/input.bin
@@ -15,8 +15,16 @@
 0x10caf2c: bin/pad_redirect.bin
 0x10bfcf8: 0x4800b235
 
-# set rand() value based on frame. TODO: Fix bolts
+# set rand() value based on frame.
 0x119d1c4: bin/rand.bin
 
 #freeze rng
 # 0x119D1C8: 0x4E800020 
+
+# render_redirect
+0x10cab58: bin/render.bin
+0xb4d264: 0x4857d8f5
+
+# cellGcmSetFlipCommand redirect
+0x10caab4: bin/flip_redirect.bin
+0x10b1654: 0x48019461
