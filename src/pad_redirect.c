@@ -40,11 +40,10 @@
     tas_state = TAS_PLAYBACK; \
 } while(0)
 
-// render mode
-#define NONE 0 
-#define NO_RENDER_UNCAP 1
-#define UNCAP_ONLY 2
-#define NO_RENDER_ONLY 3
+// render scripting
+#define RENDER_NO_CHANGE 0
+#define RENDER_ENABLE 1
+#define RENDER_DISABLE 2
 
 int32_t _start(uint32_t port_no, cellPadData *data) {
     frame_timer += 1;
@@ -76,23 +75,26 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         // Read from file
         syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, sizeof(tasInputs), tas_nread_ptr);
 
-        if(inputBuffer->render == 0xDEAD) {
+        if (inputBuffer->render == 0xDEAD) {
             tas_stop_api = 1;
             return ret;
         }
 
-        if(inputBuffer->breakp == 1)
+        if (inputBuffer->breakp == 1) {
             framestep_mode = 1;
+        }
+
+        if (inputBuffer->render == RENDER_ENABLE) {
+            desired_gcm_flip = 0;
+            desired_should_render = 0;
+        } else if (inputBuffer->render == RENDER_DISABLE) {
+            desired_gcm_flip = 1;
+            desired_should_render = 1;
+        }
 
         // Disable rendering if frame_to_skip_to is set.
-        if(frame_to_skip_to && frame_timer < frame_to_skip_to) {
-            set_gcm_flip = 1;
-            should_render = 1;
-        }
-        else {
-            set_gcm_flip = 0;
-            should_render = 0;
-        }
+        set_gcm_flip = desired_gcm_flip;
+        should_render = desired_should_render;
 
         // Overwrite the inputs!
         // For input recording we need both the length and the bytes that are set in "padding", or else it desyncs.
@@ -106,6 +108,9 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         data->right_analog_y = inputBuffer->right_analog_y;
         data->left_analog_x = inputBuffer->left_analog_x;
         data->left_analog_y = inputBuffer->left_analog_y;
+    } else {
+        set_gcm_flip = 0;
+        should_render = 0;
     }
 
     if ((tas_state == TAS_PLAYBACK) && tas_stop_api) {
