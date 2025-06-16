@@ -11,3 +11,4 @@ WIP TAS tools for NPEA00386 (Ratchet & Clank 2).
 ## Credits
 - doesthisusername for the original TAS tools for RaC1.
 - bordplate for helping out a lot + cellGetPadData hook.
+- roboooooooooo for rackets2gui.
