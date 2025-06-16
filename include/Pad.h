@@ -18,7 +18,8 @@ typedef struct {
     uint8_t right_analog_y;
     uint8_t left_analog_x;
     uint8_t left_analog_y;
-    uint16_t breakp; 
+    uint8_t load_pos_flag;
+    uint8_t breakp; 
     uint16_t render;
     uint16_t length;
     int32_t padding;

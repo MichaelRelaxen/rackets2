@@ -26,6 +26,10 @@
 
 
 void _start() {
+	// just set this on startup
+	if(!sec_offset) 
+		api_savemode = -1;
+
 	sys_time_get(start_real_time_sec_ptr, start_real_time_nsec_ptr);
 
 	if(!sec_offset || load_in_level)
@@ -37,8 +41,7 @@ void _start() {
 				syscall(sys_usleep, 10000);
 			}
 		}
-		if (framestep_mode)
-			step_frame = 0;
+		step_frame = 0;
 	}
 
 	if(frame_to_stop_at != 0 && frame_timer == frame_to_stop_at)
@@ -68,6 +71,16 @@ void _start() {
 
 		perform_load(0, api_aside_buf);
 		api_load = 0;
+	}
+
+	/* run save handler function if set
+	SAVE_MENU 0
+	LOAD_MENU 1
+	AUTO_SAVE 3
+	*/
+	if(api_savemode != -1) {
+		save_handler(api_savemode);
+		api_savemode = -1;
 	}
 	
     // Used for load_in_level macro.

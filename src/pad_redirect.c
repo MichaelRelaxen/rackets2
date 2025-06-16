@@ -32,6 +32,8 @@
     *tas_fd_ptr = 0; \
     tas_state = TAS_STOP; \
     tas_stop_api = 0; \
+    desired_gcm_flip = 0; \
+    desired_should_render = 0; \
 } while(0)
 
 
@@ -77,6 +79,10 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
 
         if (inputBuffer->breakp == 1) {
             framestep_mode = 1;
+        }
+
+        if(inputBuffer->load_pos_flag == 1) {
+            memcpy(&player_coords, position_to_load, 30);
         }
 
         // render scripting

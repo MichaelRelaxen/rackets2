@@ -27,6 +27,8 @@
 #define formatted_ntrl ((char*)CUSTOM_VAR + 0x155)
 #define formatted_state ((char*)CUSTOM_VAR + 0x175)
 
+#define api_aside_buf ((void*)0x1C00000)
+
 // pad_redirect.c
 #define should_render (*(((int*)CUSTOM_VAR) + 12))
 #define set_gcm_flip (*(((int*)CUSTOM_VAR) + 13))
@@ -39,7 +41,9 @@
 
 #define hide_gui (*(((int*)CUSTOM_VAR) + 18))
 
-#define api_aside_buf ((void*)0x1C00000)
+#define api_savemode (*(((int*)CUSTOM_VAR) + 19))
+
+#define rng_nudge (*(((int*)CUSTOM_VAR) + 20))
 
 #define recorded_buttons *((ushort*)(CUSTOM_VAR + 0x260))
 #define recorded_sticks *((uint*)(CUSTOM_VAR + 0x262))
@@ -47,7 +51,9 @@
 #define recorded_pad_len *((uint*)(CUSTOM_VAR + 0x304))
 
 #define tas_state *((uint*)(CUSTOM_VAR + 0x270))
-#define tas_stop_api *((uint*)(CUSTOM_VAR + 0x274))
+#define tas_stop_api *((uint*)(CUSTOM_VAR + 0x274)) 
 
 #define tas_fd_ptr ((int*)(CUSTOM_VAR + 0x278))
 #define tas_nread_ptr ((unsigned int*)(CUSTOM_VAR + 0x280))
+
+#define position_to_load ((void*)(CUSTOM_VAR + 0x400))
