@@ -40,11 +40,6 @@
     tas_state = TAS_PLAYBACK; \
 } while(0)
 
-// render scripting
-#define RENDER_NO_CHANGE 0
-#define RENDER_ENABLE 1
-#define RENDER_DISABLE 2
-
 int32_t _start(uint32_t port_no, cellPadData *data) {
     frame_timer += 1;
 
@@ -84,15 +79,18 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
             framestep_mode = 1;
         }
 
-        if (inputBuffer->render == RENDER_ENABLE) {
-            desired_gcm_flip = 0;
-            desired_should_render = 0;
-        } else if (inputBuffer->render == RENDER_DISABLE) {
-            desired_gcm_flip = 1;
-            desired_should_render = 1;
+        // render scripting
+        // BIT 0: change frameskip?
+        // BIT 1: frameskip value
+        // BIT 2: change render?
+        // BIT 3: render value
+        if (inputBuffer->render >> 0 & 1 == 1) {
+            desired_gcm_flip = inputBuffer->render >> 1 & 1;
+        }
+        if (inputBuffer->render >> 2 & 1 == 1) {
+            desired_should_render = inputBuffer->render >> 3 & 1;
         }
 
-        // Disable rendering if frame_to_skip_to is set.
         set_gcm_flip = desired_gcm_flip;
         should_render = desired_should_render;
 
