@@ -10,7 +10,7 @@ typedef struct {
     uint16_t left_analog_y;
 } cellPadData;
 
-typedef struct {
+typedef struct __attribute__((packed)) {
     uint8_t buttons_high; 
     uint8_t buttons_low;
 
@@ -20,9 +20,10 @@ typedef struct {
     uint8_t left_analog_y;
     uint8_t load_pos_flag;
     uint8_t breakp; 
-    uint16_t render;
-    uint16_t length;
-    int32_t padding;
+    uint8_t render;
+    uint8_t length;
+    uint32_t rng;
+    uint16_t padding;
 } tasInputs;
 
 // buttons

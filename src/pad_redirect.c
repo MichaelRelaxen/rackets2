@@ -100,6 +100,10 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         set_gcm_flip = desired_gcm_flip;
         should_render = desired_should_render;
 
+        if (inputBuffer->rng) {
+            rng_nudge = inputBuffer->rng;
+        }
+
         // Overwrite the inputs!
         // For input recording we need both the length and the bytes that are set in "padding", or else it desyncs.
         // According to the SDK documentation, if the data output from the controller is the same as the data obtained before, then length should be 0.
@@ -131,7 +135,8 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         TAS_DONE();
     }
 
-    if(tas_stop_api && tas_state == 6)
+    // reset back if tas state is stop so we can use it again xd
+    if(tas_stop_api && tas_state == TAS_STOP)
         tas_stop_api = 0;
 
     return ret;

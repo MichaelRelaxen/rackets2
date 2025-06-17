@@ -66,6 +66,7 @@ void _start() {
 		set_aside_file();
 	}
 	if(api_load) {
+		rng_nudge = 0;
         if (!*(int*)api_aside_buf)
             set_aside_file();
 

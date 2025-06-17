@@ -9,6 +9,10 @@
     ((uint32_t)((((f) * 0x45d9f3bU) ^ ((f) >> 3)) * 0x45d9f3bU) ^ \
                ((f) * 0x27d4eb2dU))
 
+#define SCRAMBLE_FRAME_FAST(f)   ((uint32_t)(((f) ^ ((f) >> 3)) * 0x27d4eb2dU))
+
+
+
 register unsigned int ctr asm("ctr");
 register unsigned int lr asm("lr");
 
@@ -34,5 +38,5 @@ uint32_t _start(void)
         rand_count += 1000;
     }
 
-    return SCRAMBLE_FRAME(frames_since_spawn + rand_count) /*& 0x3fffffff*/;
+    return SCRAMBLE_FRAME_FAST(frames_since_spawn + rand_count + rng_nudge) /*& 0x3fffffff*/;
 }
