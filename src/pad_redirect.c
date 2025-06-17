@@ -72,7 +72,8 @@ int32_t _start(uint32_t port_no, cellPadData *data) {
         // Read from file
         syscall(sys_fs_read, *tas_fd_ptr, inputBuffer, sizeof(tasInputs), tas_nread_ptr);
 
-        if (inputBuffer->render == 0xDEAD) {
+        // Check if file is at EOF, and stop playback if so.
+        if (inputBuffer->render == 0xDE && inputBuffer->length == 0xAD) {
             tas_stop_api = 1;
             return ret;
         }
