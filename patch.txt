@@ -31,3 +31,7 @@
 
 # make jamming array checkpoint work properly from a set aside flip_redirect
 0xB4DBD0: 0x60000000
+
+# patch fpm ij crashes?
+0xB7477C: 0x60000000
+0xB74820: 0x60000000
