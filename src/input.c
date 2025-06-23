@@ -38,7 +38,7 @@ void _start() {
 	if (framestep_mode) {
 		if (!step_frame) {
 			while (framestep_mode && !step_frame) {
-				syscall(sys_usleep, 1);
+				syscall(sys_usleep, 10000);
 			}
 		}
 		step_frame = 0;
