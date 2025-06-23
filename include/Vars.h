@@ -27,6 +27,8 @@
 #define formatted_ntrl ((char*)CUSTOM_VAR + 0x155)
 #define formatted_state ((char*)CUSTOM_VAR + 0x175)
 
+#define render_all_toggle (*(((int*)CUSTOM_VAR) + 21))
+
 #define api_aside_buf ((void*)0x1C00000)
 
 // pad_redirect.c

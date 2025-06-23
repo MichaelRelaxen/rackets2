@@ -61,6 +61,7 @@
 ---------------------Variables----------------------
 --------------------------------------------------*/
 
+#define render_all_region ((void*)0x156B100)
 
 // A pointer to the current save data info in memory.
 #define savedata_info (*((void**)0x1410E50))

@@ -38,10 +38,14 @@ void _start() {
 	if (framestep_mode) {
 		if (!step_frame) {
 			while (framestep_mode && !step_frame) {
-				syscall(sys_usleep, 10000);
+				syscall(sys_usleep, 1);
 			}
 		}
 		step_frame = 0;
+	}
+
+	if(render_all_toggle) {
+		memset(render_all_region, 0xff, 0xff);
 	}
 
 	if(frame_to_stop_at != 0 && frame_timer == frame_to_stop_at)
