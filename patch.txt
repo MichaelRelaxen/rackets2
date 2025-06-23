@@ -1,4 +1,4 @@
-#- name: Rackets2
+#- name: Rackets2 - rng nudge version
 
 # somewhere in input
 0x10c9b70: bin/input.bin
@@ -8,8 +8,8 @@
 0x10bbd00: bin/lv2.bin
 
 # somewhere in draw 
-0x10c955c: bin/draw.bin
-0x10c18ec: 0x490c955f
+0x10c3498: bin/draw.bin
+0x10c18ec: 0x490c349b
 
 # replace function call for cellGetPadData to our own.
 0x10caf2c: bin/pad_redirect.bin
@@ -28,10 +28,3 @@
 # cellGcmSetFlipCommand redirect
 0x10caab4: bin/flip_redirect.bin
 0x10b1654: 0x48019461
-
-# make jamming array checkpoint work properly from a set aside file.
-0xB4DBD0: 0x60000000
-
-# patch fpm ij crashes?
-0xB7477C: 0x60000000
-0xB74820: 0x60000000

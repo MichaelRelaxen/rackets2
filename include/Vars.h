@@ -6,7 +6,7 @@
 
 #define CUSTOM_VAR (0x1BE0000)
 
-// input.c
+
 #define start_real_time_sec_ptr (((int*)CUSTOM_VAR) + 0)
 #define start_real_time_sec (*(((int*)CUSTOM_VAR) + 1))
 #define start_real_time_nsec_ptr (((int*)CUSTOM_VAR) + 2)
@@ -27,11 +27,11 @@
 #define formatted_ntrl ((char*)CUSTOM_VAR + 0x155)
 #define formatted_state ((char*)CUSTOM_VAR + 0x175)
 
-#define render_all_toggle (*(((int*)CUSTOM_VAR) + 21))
+
 
 #define api_aside_buf ((void*)0x1C00000)
 
-// pad_redirect.c
+
 #define should_render (*(((int*)CUSTOM_VAR) + 12))
 #define set_gcm_flip (*(((int*)CUSTOM_VAR) + 13))
 
@@ -42,10 +42,10 @@
 #define api_setaside (*(((int*)CUSTOM_VAR) + 17))
 
 #define hide_gui (*(((int*)CUSTOM_VAR) + 18))
-
 #define api_savemode (*(((int*)CUSTOM_VAR) + 19))
-
 #define rng_nudge (*(((int*)CUSTOM_VAR) + 20))
+#define render_all_toggle (*(((int*)CUSTOM_VAR) + 21))
+#define input_display_toggle (*(((int*)CUSTOM_VAR) + 22))
 
 #define recorded_buttons *((ushort*)(CUSTOM_VAR + 0x260))
 #define recorded_sticks *((uint*)(CUSTOM_VAR + 0x262))

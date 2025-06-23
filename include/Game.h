@@ -25,9 +25,9 @@
 #define text_medium_center ((void (*)(int, int, unsigned int, char*, int))0xb14a44)
 #define text_medium_right ((void (*)(int, int, unsigned int, char*, int))0xb142b8)
 
-#define text_small_left ((void (*)(int, int, unsigned int, char*, int))0xb14784)
+#define text_small_right ((void (*)(int, int, unsigned int, char*, int))0xb14784)
 #define text_small_center ((void (*)(int, int, unsigned int, char*, int))0xb0e960)
-#define text_small_right ((void (*)(int, int, unsigned int, char*, int))0xb0e758)
+#define text_small_left ((void (*)(int, int, unsigned int, char*, int))0xb0e758)
 
 #define text_large_center ((void (*)(int, int, unsigned int, char*, int))0xb14d54)
 #define text_large_right ((void (*)(int, int, unsigned int, char*, int))0xb1331c)
@@ -111,6 +111,13 @@
 #define destination_planet (*((int*)0x156B054))
 
 #define load_in_level ((!should_load) && (old_should_load))
+
+#define button_bitmask (*((uint*)0x147A430))
+
+#define RIGHT_STICK_X (*(float *)0x147A60C)
+#define RIGHT_STICK_Y (*(float *)0x147A610)
+#define LEFT_STICK_X  (*(float *)0x147A614)
+#define LEFT_STICK_Y  (*(float *)0x147A618)
 
 // Weapons/Gadget IDs
 #define ELECTROLYZER 38
