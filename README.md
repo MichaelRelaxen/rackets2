@@ -1,14 +1,18 @@
-# rackets2
-WIP TAS tools for NPEA00386 (Ratchet & Clank 2).
+## rackets2
+WIP TAS tools for Ratchet & Clank 2 (NPEA00386).
 
-## Functionality
-- Record inputs to .rtas format
+### Functionality
 - Playback recorded inputs or scripted inputs via .rtas format.
-- Custom "RNG" that should always be the same... so no desyncs! (hopefully)
+- Record inputs to .rtas format
+- Custom "RNG" + functionality for nudging RNG.
 - Toggle framestepping mode and step frames.
-- Disable rendering and uncap the framerate!
+- Ability to disable rendering and uncap the framerate.
+- HUD with information useful for TASing + input display.
 
-## Credits
+### Build
+1. Install `binutils-powerpc64-linux-gnu` and `gcc-powerpc64-linux-gnu`.
+2. Then just run `make`.
+
+### Credits
 - doesthisusername for the original TAS tools for RaC1.
-- bordplate for helping out a lot + cellGetPadData hook.
-- roboooooooooo for rackets2gui.
+- bordplate for cellGetPadData hook + help with randomness.
