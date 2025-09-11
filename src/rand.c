@@ -38,5 +38,5 @@ uint32_t _start(void)
         rand_count += 1000;
     }
 
-    return SCRAMBLE_FRAME_FAST(frames_since_spawn + rand_count + rng_nudge) /*& 0x3fffffff*/;
+    return SCRAMBLE_FRAME_FAST(frames_since_reload + rand_count + rng_nudge) /*& 0x3fffffff*/;
 }

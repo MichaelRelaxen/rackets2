@@ -32,8 +32,14 @@
 0x10b1654: 0x48019461
 
 # make jamming array checkpoint work properly from a set aside file.
-0xB4DBD0: 0x60000000
+# 0xB4DBD0: 0x60000000
 
 # patch fpm ij crashes?
 0xB7477C: 0x60000000
 0xB74820: 0x60000000
+
+# jp mode
+0xb0d168: 0x2c030001
+
+# freeze frame timer to 0 on loading screen, for RNG.
+0xBEA8E0: 0x38800000

@@ -40,7 +40,8 @@
 
 void _start() {
 	// Crash if we run this code on the loading screens... so just don't run it.
-	if(should_load || hide_gui)
+	// Also crashes on boot, so we should not write anything if current planet is -1.
+	if(current_planet == -1 || should_load || hide_gui)
 		return;
 	
 	uint32_t color = rainbow_color(frames_since_spawn * 5);

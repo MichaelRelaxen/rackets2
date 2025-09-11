@@ -44,6 +44,11 @@
 
 int32_t _start(uint32_t port_no, cellPadData *data) {
     frame_timer += 1;
+	
+	if (!data)
+		return;
+	
+
 
     int32_t ret = cellPadGetData(port_no, data);
 

@@ -26,6 +26,9 @@
 
 
 void _start() {
+	
+
+	
 	// just set this on startup
 	if(!sec_offset) 
 		api_savemode = -1;
@@ -34,6 +37,7 @@ void _start() {
 
 	if(!sec_offset || load_in_level)
 		reset_timers();
+
 
 	if (framestep_mode) {
 		if (!step_frame) {
